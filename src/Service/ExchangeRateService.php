@@ -26,6 +26,7 @@ class ExchangeRateService {
      */
     public function getSupportedCurrencies(): array {
         $supportedCurrencies = [];
+        //TODO: Some currencies might not be able to convert between different exchange rate apis, fix this.
         foreach($this->abstractExchangeRateAPIs as $abstractExchangeRateAPI) {
             $supportedCurrencies = \array_merge($supportedCurrencies, $abstractExchangeRateAPI->getSupportedCurrencies());
         }
@@ -47,6 +48,9 @@ class ExchangeRateService {
                 return $abstractExchangeRateAPI->getExchangeAmount($amount, $fromCurrency, $toCurrency);
             }
         }
+
+        //TODO: Find two exchange rates that enables converting from fromCurrency to toCurrency.
+        // Needs a common currency that is a currency in first api and a currency in second api where toCurrency exists
 
         return -1;
     }
