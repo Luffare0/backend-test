@@ -2,10 +2,16 @@
 
 namespace Opeepl\BackendTest\API;
 
+use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 
 abstract class AbstractExchangeRateAPI
 {
+
+    /**
+     * @var Client $client
+     */
+    protected $client;
 
     /**
      * @return array<string>

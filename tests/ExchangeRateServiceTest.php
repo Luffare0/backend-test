@@ -1,6 +1,7 @@
 <?php
 namespace Opeepl\BackendTest\Service;
 
+use GuzzleHttp\Exception\ClientException;
 use Opeepl\BackendTest\API\ExchangeRatesDataAPI;
 use PHPUnit\Framework\TestCase;
 
@@ -22,6 +23,12 @@ class ExchangeRateServiceTest extends TestCase {
         $this->assertContains('EUR', $currencies, 'Expected EUR to be a supported currency');
         $this->assertContains('DKK', $currencies, 'Expected DKK to be a supported currency');
         $this->assertContains('CAD', $currencies, 'Expected CAD to be a supported currency');
+    }
+
+    public function notSupportedCurrenciesTest() {
+        $currencies = $this->exchangeRateService->getSupportedCurrencies();
+        $this->assertNotContains('a made up currency', $currencies, 'Did not expect a made up currency to be supported');
+        $this->assertNotContains('BTC', $currencies, 'Did not expect BTC to be supported');
     }
 
     /**
@@ -51,5 +58,14 @@ class ExchangeRateServiceTest extends TestCase {
         $amount = $this->exchangeRateService->getExchangeAmount(200, 'USD', 'USD');
 
         $this->assertEquals(200, $amount);
+    }
+
+    /**
+     * @test
+     */
+    public function getExchangeAmountNotSupportedTest() {
+
+        $this->expectException(ClientException::class);
+        $this->exchangeRateService->getExchangeAmount(200, 'a made up currency', 'USD');
     }
 }

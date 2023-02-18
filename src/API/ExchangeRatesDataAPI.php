@@ -10,11 +10,9 @@ use Psr\Http\Message\ResponseInterface;
 
 class ExchangeRatesDataAPI extends AbstractExchangeRateAPI
 {
+    // TODO: put in env
+    private const API_KEY = '2p46MmpLapxo5xkLuEIAfdKkFVFFX6iF';
 
-    /**
-     * @var Client $client
-     */
-    private $client;
 
     public function __construct()
     {
@@ -54,7 +52,7 @@ class ExchangeRatesDataAPI extends AbstractExchangeRateAPI
         return $this->client->request(
             'GET',
             $uri,
-            [RequestOptions::HEADERS => ['apikey' => '2p46MmpLapxo5xkLuEIAfdKkFVFFX6iF']]
+            [RequestOptions::HEADERS => ['apikey' => self::API_KEY]]
         );
     }
 }
