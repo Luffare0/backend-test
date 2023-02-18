@@ -30,7 +30,7 @@ class ExchangeRatesDataAPI extends AbstractExchangeRateAPI
     {
         $response = $this->makeRequest('/exchangerates_data/symbols');
 
-        $result = \json_decode($response->getBody(), true);
+        $result = self::getArrayBody($response);
 
         return \array_keys($result['symbols']);
     }
@@ -43,7 +43,7 @@ class ExchangeRatesDataAPI extends AbstractExchangeRateAPI
         $uri = "/exchangerates_data/convert?to=$toCurrency&from=$fromCurrency&amount=$amount";
         $response = $this->makeRequest($uri);
 
-        $result = \json_decode($response->getBody(), true);
+        $result = self::getArrayBody($response);
 
         return $result['result'];
     }
@@ -58,5 +58,13 @@ class ExchangeRatesDataAPI extends AbstractExchangeRateAPI
             $uri,
             [RequestOptions::HEADERS => ['apikey' => $this->apiKey]]
         );
+    }
+
+    /**
+     * @param ResponseInterface $response
+     * @return array
+     */
+    private static function getArrayBody(ResponseInterface $response): array {
+        return \json_decode($response->getBody(), true);
     }
 }
