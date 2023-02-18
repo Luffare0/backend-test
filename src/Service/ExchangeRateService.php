@@ -1,10 +1,23 @@
 <?php
 namespace Opeepl\BackendTest\Service;
 
+use Opeepl\BackendTest\API\AbstractExchangeRateAPI;
+
 /**
  * Main entrypoint for this library.
  */
 class ExchangeRateService {
+
+    /**
+     * @var AbstractExchangeRateAPI
+     */
+    private $abstractExchangeRateAPI;
+
+    public function __construct(AbstractExchangeRateAPI $abstractExchangeRateAPI)
+    {
+        $this->abstractExchangeRateAPI = $abstractExchangeRateAPI;
+    }
+
 
     /**
      * Return all supported currencies
@@ -12,6 +25,7 @@ class ExchangeRateService {
      * @return array<string>
      */
     public function getSupportedCurrencies(): array {
+        return $this->abstractExchangeRateAPI->getSupportedCurrencies();
     }
 
     /**
@@ -23,5 +37,6 @@ class ExchangeRateService {
      * @return int
      */
     public function getExchangeAmount(int $amount, string $fromCurrency, string $toCurrency): int {
+        return $this->abstractExchangeRateAPI->getExchangeAmount($amount, $fromCurrency, $toCurrency);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Opeepl\BackendTest\Service;
 
+use Opeepl\BackendTest\API\ExchangeRatesDataAPI;
 use PHPUnit\Framework\TestCase;
 
 class ExchangeRateServiceTest extends TestCase {
@@ -8,7 +9,7 @@ class ExchangeRateServiceTest extends TestCase {
     protected $exchangeRateService;
 
     public function setUp(): void {
-        $this->exchangeRateService = new ExchangeRateService();
+        $this->exchangeRateService = new ExchangeRateService(new ExchangeRatesDataAPI());
     }
 
     /**
