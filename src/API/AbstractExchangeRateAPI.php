@@ -27,12 +27,6 @@ abstract class AbstractExchangeRateAPI
     public abstract function getExchangeAmount(int $amount, string $fromCurrency, string $toCurrency): int;
 
     /**
-     * @param string $uri
-     * @return ResponseInterface
-     */
-    public abstract function makeRequest(string $uri) : ResponseInterface;
-
-    /**
      * @param string $fromCurrency
      * @param string $toCurrency
      * @return bool

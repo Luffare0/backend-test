@@ -50,7 +50,8 @@ class ExchangeRateService {
         }
 
         //TODO: Find two exchange rates that enables converting from fromCurrency to toCurrency.
-        // Needs a common currency that is a currency in first api and a currency in second api where toCurrency exists
+        // Needs a common currency that is a currency in first api and a currency in second api where $toCurrency exists
+        // Find shortest path between two exchange rates that supports from and toCurrency. Djikstras?
 
         return -1;
     }

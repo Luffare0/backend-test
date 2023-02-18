@@ -51,7 +51,7 @@ class ExchangeRatesDataAPI extends AbstractExchangeRateAPI
     /**
      * @throws GuzzleException
      */
-    public function makeRequest(string $uri): ResponseInterface
+    private function makeRequest(string $uri): ResponseInterface
     {
         //TODO: Check if success=true?
         return $this->client->request(
