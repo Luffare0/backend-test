@@ -1,7 +1,6 @@
 <?php
 namespace Opeepl\BackendTest\Service;
 
-use GuzzleHttp\Exception\ClientException;
 use Opeepl\BackendTest\API\ExchangeRatesDataAPI;
 use PHPUnit\Framework\TestCase;
 
@@ -10,7 +9,7 @@ class ExchangeRateServiceTest extends TestCase {
     protected $exchangeRateService;
 
     public function setUp(): void {
-        $this->exchangeRateService = new ExchangeRateService(new ExchangeRatesDataAPI());
+        $this->exchangeRateService = new ExchangeRateService([new ExchangeRatesDataAPI()]);
     }
 
     /**
@@ -64,8 +63,8 @@ class ExchangeRateServiceTest extends TestCase {
      * @test
      */
     public function getExchangeAmountNotSupportedTest() {
+        $amount = $this->exchangeRateService->getExchangeAmount(200, 'a made up currency', 'USD');
 
-        $this->expectException(ClientException::class);
-        $this->exchangeRateService->getExchangeAmount(200, 'a made up currency', 'USD');
+        $this->assertEquals(-1, $amount);
     }
 }

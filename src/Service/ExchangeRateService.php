@@ -9,13 +9,13 @@ use Opeepl\BackendTest\API\AbstractExchangeRateAPI;
 class ExchangeRateService {
 
     /**
-     * @var AbstractExchangeRateAPI
+     * @var AbstractExchangeRateAPI[]
      */
-    private $abstractExchangeRateAPI;
+    private $abstractExchangeRateAPIs;
 
-    public function __construct(AbstractExchangeRateAPI $abstractExchangeRateAPI)
+    public function __construct(array $abstractExchangeRateAPIs)
     {
-        $this->abstractExchangeRateAPI = $abstractExchangeRateAPI;
+        $this->abstractExchangeRateAPIs = $abstractExchangeRateAPIs;
     }
 
 
@@ -25,7 +25,12 @@ class ExchangeRateService {
      * @return array<string>
      */
     public function getSupportedCurrencies(): array {
-        return $this->abstractExchangeRateAPI->getSupportedCurrencies();
+        $supportedCurrencies = [];
+        foreach($this->abstractExchangeRateAPIs as $abstractExchangeRateAPI) {
+            $supportedCurrencies = \array_merge($supportedCurrencies, $abstractExchangeRateAPI->getSupportedCurrencies());
+        }
+
+        return \array_unique($supportedCurrencies);
     }
 
     /**
@@ -37,6 +42,12 @@ class ExchangeRateService {
      * @return int
      */
     public function getExchangeAmount(int $amount, string $fromCurrency, string $toCurrency): int {
-        return $this->abstractExchangeRateAPI->getExchangeAmount($amount, $fromCurrency, $toCurrency);
+        foreach($this->abstractExchangeRateAPIs as $abstractExchangeRateAPI) {
+            if($abstractExchangeRateAPI->canConvert($fromCurrency, $toCurrency)) {
+                return $abstractExchangeRateAPI->getExchangeAmount($amount, $fromCurrency, $toCurrency);
+            }
+        }
+
+        return -1;
     }
 }

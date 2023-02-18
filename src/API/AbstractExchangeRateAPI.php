@@ -31,4 +31,16 @@ abstract class AbstractExchangeRateAPI
      * @return ResponseInterface
      */
     public abstract function makeRequest(string $uri) : ResponseInterface;
+
+    /**
+     * @param string $fromCurrency
+     * @param string $toCurrency
+     * @return bool
+     */
+    public function canConvert(string $fromCurrency, string $toCurrency): bool
+    {
+        $supportedCurrencies = $this->getSupportedCurrencies();
+
+        return \in_array($fromCurrency, $supportedCurrencies) && \in_array($toCurrency, $supportedCurrencies);
+    }
 }

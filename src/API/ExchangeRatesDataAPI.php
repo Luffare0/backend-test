@@ -53,6 +53,7 @@ class ExchangeRatesDataAPI extends AbstractExchangeRateAPI
      */
     public function makeRequest(string $uri): ResponseInterface
     {
+        //TODO: Check if success=true?
         return $this->client->request(
             'GET',
             $uri,
