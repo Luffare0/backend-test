@@ -10,13 +10,17 @@ use Psr\Http\Message\ResponseInterface;
 
 class ExchangeRatesDataAPI extends AbstractExchangeRateAPI
 {
-    // TODO: put in env
-    private const API_KEY = '2p46MmpLapxo5xkLuEIAfdKkFVFFX6iF';
 
+    /**
+     * @var string
+     */
+    private $apiKey;
 
     public function __construct()
     {
         $this->client = new Client(['base_uri' => 'https://api.apilayer.com']);
+        //TODO: Load from .env file
+        $this->apiKey = '2p46MmpLapxo5xkLuEIAfdKkFVFFX6iF';
     }
 
     /**
@@ -52,7 +56,7 @@ class ExchangeRatesDataAPI extends AbstractExchangeRateAPI
         return $this->client->request(
             'GET',
             $uri,
-            [RequestOptions::HEADERS => ['apikey' => self::API_KEY]]
+            [RequestOptions::HEADERS => ['apikey' => $this->apiKey]]
         );
     }
 }
